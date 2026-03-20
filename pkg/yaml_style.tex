@@ -1,0 +1,29 @@
+\lstdefinelanguage{YAML}{
+  keywords={true,false,null,yes,no},
+  keywordstyle=\color[HTML]{3dad5d}\bfseries,
+  sensitive=false,
+  comment=[l]{\#},
+  morecomment=[l]{\#},
+  commentstyle=\color{gray}\itshape,
+  stringstyle=\color[HTML]{95cede},
+  morestring=[b]",
+  morestring=[b]',
+}
+
+\lstdefinestyle{yamlStyle}{
+  language=YAML,
+  basicstyle=\ttfamily\footnotesize,
+  keywordstyle=\color[HTML]{3dad5d},
+  morekeywords={[2]true,false,null, p2p, rdvp, maddr, static-relays},
+  keywordstyle={[2]\color[HTML]{3dad5d}},
+  commentstyle=\color{gray},
+  stringstyle=\color{black},
+  numbers=left,
+  numberstyle=\tiny\color{gray},
+  stepnumber=1,
+  numbersep=6pt,
+  showstringspaces=false,
+  breaklines=true,
+  rulecolor=\color{gray!40},
+  alsoletter=-,
+}

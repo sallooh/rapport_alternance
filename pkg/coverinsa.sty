@@ -1,0 +1,248 @@
+% Package pour la mise en page d'un rapport de PFE ou de stage avec la charte charte graphique de l'INSA Rennes (2022)
+% Refonte du package these.sty proposé par l'ADOC de l'IRISA
+% Auteur : Arthur Branchu-Harel
+% version 1.0 (2022)
+
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{coverinsa}[2022/08/25 Cover pages for internship reports using the INSA Rennes graphic charter]
+
+%
+% Packages nécessaires
+%fo: Redefining alias 'default' -> 'french'.
+
+\RequirePackage{ifthen}
+\RequirePackage{float}
+\RequirePackage{graphicx}
+\RequirePackage{tikz}
+\RequirePackage{xcolor}
+\RequirePackage{fancyhdr}
+\RequirePackage{hyperref}
+
+% Configuration de certain package
+\usetikzlibrary{calc} 	% calcul sur les coordonnées 
+\urlstyle{same}			% les url garde le même style que le text
+
+% Placement par défault des figures et tables en mode 'here', i.e : à l'endroit ou est déclarée la figure ou la table dans le code source 
+\floatplacement{figure}{H}
+\floatplacement{table}{H}
+
+% Couleurs
+\definecolor{rouge}{RGB}{228,38,24}
+\definecolor{rouge2}{RGB}{236,97,90}
+\definecolor{jaune}{RGB}{246,159,29}
+\definecolor{beige}{RGB}{245,173,170}
+\definecolor{orange}{RGB}{239,131,102}
+\definecolor{gris}{RGB}{151,151,151}
+
+%
+% Variables pour stocker les informations relatives au stages
+%
+\newcommand{\TYPEstage}{Projet de Fin d'Études}
+\newcommand{\STAGE}{\TYPEstage}
+\newcommand{\AUTEURprenom}{Prénom}
+\newcommand{\AUTEURnom}{\textsc{Nom}}
+\newcommand{\TITRE}{Intitulé du PFE : le sujet qui peut s'écrire sur plusieurs lignes}
+\newcommand{\ANNEEUNIVERSITAIRE}{20xx-20xx}
+\newcommand{\TUTEURnom}{\textsc{Nom} du tuteur en entreprise}
+\newcommand{\TUTEURprenom}{Prénom }
+\newcommand{\TEXTElogo}{\textit{(Emplacement du logo de l'entreprise)}}
+\newcommand{\NOMFICHIERlogo}{terre.jpg}
+\newcommand{\LARGEURlogo}{1cm}
+\newcommand{\CORRESPONDANTINSAnom}{\textsc{Nom} du correspondant pédagogique INSA}
+\newcommand{\CORRESPONDANTINSAprenom}{Prénom }
+\newcommand{\PFESOUTENULE}{date }
+
+
+\tikzset{
+    crosses/.pic={
+        \draw[line width=1pt] (-0.125,0) -- (0.125,0);
+        \draw[line width=1pt] (0,-0.125) -- (0,0.125);
+    }
+}
+
+% Redéfinition des en-têtes et pied de page
+\fancypagestyle{insa}{
+	\fancyhf{}
+	\fancyfoot[R]{\begin{tikzpicture}[remember picture, overlay]
+		\foreach \x in {0,...,4}{
+			\draw[gris] ($(current page.south east) + (-3.56,1.08) + 0.236*(\x,0)$) -- +(0,1.18);
+		}
+		\foreach \x in {0,...,20}{
+			\draw[rouge] ($(current page.south east) + (-2.37,2.26) + 0.058*(\x,0)$) -- +(0,1.18);
+		}
+		\path[fill=rouge] ($(current page.south east) + (-2.38,1.08)$) rectangle +(1.18,1.18);
+		\node[white, xshift=-1.79cm, yshift=1.67cm] at (current page.south east) {\thepage};
+	\end{tikzpicture}}
+	\renewcommand{\headrulewidth}{0pt}
+}
+
+% Redéfinition de la commande maketitle pour la page de garde
+\renewcommand*{\maketitle}{
+  	\begin{titlepage}
+		\begin{tikzpicture}[remember picture, overlay]
+			\path[fill=rouge] (current page.north west) -- ++(0,-17.34) -- ++(12.36,0) -- ++(0,-3.72) -- ++(3.72,0) -- ++(0,21.06) -- cycle;
+			\path[fill=jaune] ($(current page.center) + (5.58,4.95)$) rectangle +(3.72,3.72);
+			\path[fill=beige] ($(current page.center) + (5.58,4.95)$) -- ++(3.72,-3.72) -- ++(0,-3.72) -| cycle;
+			\path[fill=jaune!50] ($(current page.south) + (1.86,4.92)$) -- +(3.72,3.72) |- cycle;
+			\path[fill=rouge2] ($(current page.south) + (5.58,4.92)$) rectangle +(3.72,3.72);
+			\path[fill=rouge] ($(current page.south) + (1.86,1.2)$) rectangle +(3.72,3.72);
+
+
+			% big cross
+			\foreach \x in {0,...,20} {
+				\draw[white, line width=1pt] ($(current page.south) + (1.87,8.64) + 0.185*(\x,0)$) -- +(0,11.16);
+			}
+			\foreach \x in {0,...,19} {
+				\draw[white, line width=1pt] ($(current page.center) + (-1.86,-2.49) + 0.186*(\x,0)$) -- +(0,3.72);
+				\draw[white, line width=1pt] ($(current page.center) + (5.766,-2.49) + 0.186*(\x,0)$) -- +(0,3.72);
+			}
+
+			% bottom sparse lines
+			\foreach \x in {0,...,7} {
+				\draw[orange, line width=1pt] ($(current page.south west) + (4.92,0.1) + 0.53*(\x,0)$) -- +(0,1.1);
+			}
+
+			% small crosses
+			\foreach \x in {0,1,2} {
+				\foreach \y in {0,1,2} {
+					\pic [white] at ($(current page.center) + (5.58,5.05) + 0.7*(1,1) + 1.13*(\x,\y)$) {crosses};
+					\pic [rouge2!50] at ($(current page.south) + (1.86,4.92) + 0.7*(1,1) + 1.13*(\x,\y)$) {crosses};
+				}
+			}
+
+			\node[xshift=2.4cm, yshift=-4.4cm, anchor=south west] at (current page.north west) {\includegraphics[width=7.4cm]{assets/Logo_INSARennes-developpe-Blanc-rvb-eps-converted-to.pdf}};
+
+			\node[xshift=2.3cm, yshift=-8.3cm, text width=10cm, anchor=west] at (current page.north west) {
+			  	{\color{white} \Large
+				\sffamily\TYPEstage \\
+				\sffamily présenté par \\
+    
+                \bigskip
+                
+				{\Large \sffamily\bfseries\AUTEURprenom~\AUTEURnom} \\
+
+                \bigskip
+
+				\sffamily Elève Ingénieur de l’INSA Rennes \\ Spécialité INFORMATIQUE \\ \ANNEEUNIVERSITAIRE
+			  	}
+			};
+
+			\node[xshift=2.3cm, yshift=-19.45cm, text width=10cm, anchor=north west, align=flush left] at (current page.north west) {
+				{\LARGE\sffamily\bfseries \TITRE} \\
+
+                \vspace{0.5cm}
+
+                {\sffamily\bfseries Lieu du Projet de Fin d'Études } \\
+                \ENTREPRISEnom
+
+				\vspace{1cm}
+
+				{\sffamily\bfseries Tuteur de l'Alternance et du Projet de Fin d'Études } \\
+				\TUTEURprenom ~\TUTEURnom \\
+    
+                \bigskip
+
+				{\sffamily\bfseries Correspondante pédagogique INSA} \\
+				\CORRESPONDANTINSAprenom~\CORRESPONDANTINSAnom
+
+                \bigskip
+
+                {\sffamily\bfseries PFE soutenu le}
+				\PFESOUTENULE
+		  	};
+
+			\node[xshift=-3.06cm, yshift=3.06cm] (a) at (current page.south east) {\includegraphics[width=\LARGEURlogo]{\NOMFICHIERlogo}};
+			\node[anchor=south, text width = 3.72cm] at (a.north) {\TEXTElogo};
+	  	\end{tikzpicture}
+	\end{titlepage}
+
+	\pagestyle{insa}
+}
+
+
+
+%
+% Commandes pour modifier les informations du stage
+%
+\newcommand{\typeStage}[1]{
+	\renewcommand{\TYPEstage}{Projet de fin d'études PFE-INFO-2026-2}
+	\renewcommand{\STAGE}{stage}
+}
+
+\newcommand{\auteur}[2]{
+  	\renewcommand{\AUTEURprenom}{#1}
+  	\renewcommand{\AUTEURnom}{\textsc{#2}}
+}
+
+
+\newcommand{\specialite}[1]{
+  	\renewcommand{\SPECIALITE}{#1}
+}
+
+
+\newcommand{\anneeuniversitaire}[1]{
+  	\renewcommand{\ANNEEUNIVERSITAIRE}{#1}
+}
+
+
+\newcommand{\titre}[1]{
+  	\renewcommand{\TITRE}{#1}
+}
+
+
+\newcommand{\entreprisenom}[1]{
+  	\renewcommand{\ENTREPRISEnom}{\sffamily #1}
+}
+
+
+\newcommand{\tuteur}[2]{
+  	\renewcommand{\TUTEURprenom}{\sffamily #1}
+	\renewcommand{\TUTEURnom}{\textsc{#2}}
+}
+
+\newcommand{\tuteurDeux}[2]{
+	\renewcommand{\TuteurDeuxPrenom}{\sffamily #1}
+	\renewcommand{\TuteurDeuxNom}{\textsc{\sffamily #2}}
+}
+
+
+\newcommand{\correspondantINSA}[2]{
+  	\renewcommand{\CORRESPONDANTINSAprenom}{\sffamily #1}
+	\renewcommand{\CORRESPONDANTINSAnom}{\sffamily #2}
+}
+
+\newcommand{\pfesoutenule}[2]{
+  	\renewcommand{\PFESOUTENULE}{\sffamily #1}
+}
+
+
+\newcommand{\datesout}[1]{
+	\renewcommand{\DATEsout}{#1}
+}
+
+\newcommand{\dates}[1]{
+	\renewcommand{\DATES}{#1}
+}
+
+
+\newcommand{\entrepriselogo}[3]{
+	\renewcommand{\TEXTElogo}{#1}
+	\renewcommand{\NOMFICHIERlogo}{#2}
+	\renewcommand{\LARGEURlogo}{#3}
+}
+
+
+\newcommand{\resumefrancais}[1]{
+	\renewcommand{\ABSTRACTfrancais}{#1}
+}
+
+
+\newcommand{\resumeanglais}[1]{
+	\renewcommand{\ABSTRACTanglais}{#1}
+}
+
+% Option du package pour indiquer le type de stage et afficher les informations approprier. Affiche un avertissement si option est non valide.
+\DeclareOption{ingenieur}{\typeStage{ingénieur}}
+\DeclareOption{ouvrier}{\typeStage{ouvrier}}
+\DeclareOption*{\PackageWarning{coverinsa}{Unknown ‘\CurrentOption’}}
+\ProcessOptions\relax
