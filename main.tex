@@ -1,0 +1,148 @@
+\documentclass[12pt,a4paper]{article}
+\usepackage[a4paper,top=3cm,bottom=3.5cm,left=3cm,right=3cm,marginparwidth=1.75cm]{geometry}
+\usepackage[bottom]{footmisc} 
+\usepackage[table]{xcolor} % KEEP THIS FIRST OR LATEX BORKS
+\usepackage[utf8]{inputenc}
+\usepackage{csquotes}
+\usepackage{graphicx} % Required for inserting images
+\usepackage[french]{babel}
+\usepackage[T1]{fontenc}
+\usepackage[sorting=none]{biblatex}
+\addbibresource{biblio.bib}
+\usepackage{cryptocode}
+\usepackage{booktabs}
+\setlength\heavyrulewidth{0.20ex}
+\setlength\cmidrulewidth{0.10ex}
+\setlength\lightrulewidth{0.10ex}
+\usepackage{multirow}
+\usepackage{array}
+\usepackage{float}
+\usepackage{setspace}
+\usepackage[skip=13pt, indent=20pt]{parskip}
+\usepackage[colorlinks=true, allcolors=blue]{hyperref} %autoref
+\usepackage{titlesec}
+\setlength\headheight{28pt}
+\titlespacing*{\section}{0pt}{5mm}{5mm}
+\titlespacing*{\subsection}{0pt}{5mm}{5mm}
+\titlespacing*{\subsubsection}{0pt}{4mm}{4mm}
+\usepackage{tikz}
+\usepackage{enumitem}
+\usepackage{pifont}
+\usepackage{changepage,threeparttable} % for wide tables
+\usepackage{svg}
+\usepackage{listings}
+\usepackage{pkg/msc}
+\usepackage{pgfgantt}
+\usepackage[ingenieur]{pkg/coverinsa}
+\usepackage[most]{tcolorbox}
+\usepackage{xcolor}
+\tcbset{
+  colback=gray!5,
+  colframe=black!80,
+  boxrule=0.5pt,
+  arc=2mm,
+  left=2mm,
+  right=2mm,
+  top=1mm,
+  bottom=1mm,
+  fonttitle=\bfseries,
+  coltitle=white
+}
+
+\auteur{Salah AL-BAKRI}{}
+\titre{INTITULE DU PFE }
+\entreprisenom{ Orange Cyberdefense }
+\tuteur{Rémi ABIVEN}{}
+\entrepriselogo{}{assets/ocd-logo-original.png}{3cm}
+\anneeuniversitaire{2025-2026}
+\correspondantINSA{Muriel}{PRESSIGOUT}
+\pfesoutenule{XX/06/2026}
+
+\input{pkg/go_style.tex}
+\input{pkg/bash_style.tex}
+\input{pkg/yaml_style.tex}
+
+\renewcommand{\sectionautorefname}{Section}
+\renewcommand{\subsectionautorefname}{Section}
+\renewcommand{\subsubsectionautorefname}{Section}
+
+
+\begin{document}
+
+\setstretch{1}
+
+\maketitle
+\pagebreak
+
+
+\thispagestyle{empty}
+\setcounter{tocdepth}{2}
+
+
+\pagebreak
+
+
+
+\setcounter{page}{1}
+
+
+% Inclure la section "Autorisation de diffusion et d’archivage du rapport"
+\addcontentsline{toc}{section}{Autorisation de diffusion et d’archivage du rapport}
+\input{src/1_ADA}
+\pagebreak
+
+% Inclure la section "Remerciements"
+\addcontentsline{toc}{section}{Remerciements}
+\input{src/2_remerciements}
+\pagebreak
+
+% Ajoutez ici la section "TABLE DES MATIERES."
+\addcontentsline{toc}{section}{Table des matières}
+\tableofcontents
+\newpage
+
+% Ajoutez ici la section "Glossaire."
+\addcontentsline{toc}{section}{Glossaire}
+\input{src/3_glossaire}
+\pagebreak
+
+\input{src/4_intro}
+\pagebreak
+
+\input{src/5_presentatoin_entreprise}
+\pagebreak
+
+\input{src/6_context}
+\pagebreak
+
+\input{src/7_mise_en_place_lab}
+\pagebreak
+
+\input{src/8_watchdog}
+\pagebreak
+
+\input{src/10_a_suivre}
+\pagebreak
+
+\input{src/11_annexe}
+
+\printbibliography
+\pagebreak
+
+\input{src/12_resume}
+\pagebreak
+
+\clearpage
+\newpage
+\thispagestyle{empty}
+\newgeometry{top=0cm, bottom=0cm, left=0cm, right=0cm}
+\begin{tikzpicture}[remember picture, overlay]
+  \node[anchor=center] at (current page.center) {%
+    \includegraphics[width=\paperwidth,height=\paperheight,keepaspectratio=false]{assets/cover.jpg}%
+  };
+\end{tikzpicture}
+\restoregeometry
+
+
+
+\end{document}
